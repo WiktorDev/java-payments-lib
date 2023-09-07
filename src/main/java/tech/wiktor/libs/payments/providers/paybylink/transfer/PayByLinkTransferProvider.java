@@ -1,11 +1,14 @@
-package tech.wiktor.libs.payments.providers.paybylinkTransfer;
+package tech.wiktor.libs.payments.providers.paybylink.transfer;
 
 import okhttp3.Response;
 import tech.wiktor.libs.payments.entities.GeneratedPaymentEntity;
 import tech.wiktor.libs.payments.exceptions.PaymentException;
 import tech.wiktor.libs.payments.providers.Params;
 import tech.wiktor.libs.payments.providers.Provider;
+import tech.wiktor.libs.payments.providers.paybylink.transfer.PayByLinkTransferParams;
 import tech.wiktor.libs.payments.utils.HashBuilder;
+
+import java.util.List;
 
 import static tech.wiktor.libs.payments.utils.StringUtils.getValues;
 
@@ -22,7 +25,7 @@ public class PayByLinkTransferProvider extends Provider {
     @Override
     public GeneratedPaymentEntity createTransaction() throws PaymentException {
         this.params.signature = HashBuilder.sha256(String.format("%s|%s", this.secretHash, this.params.getValues()));
-        var httpResponse = this.post("https://secure.pbl.pl/api/v1/transfer/generate", this.params.requestBody());
+        var httpResponse = this.post("https://secure.pbl.pl/api/v1/transfer/generate", this.params.requestBody(), builder -> {});
         if (httpResponse == null) throw new PaymentException("Can't send http request!");
         Response response = httpResponse.response();
 
@@ -39,6 +42,11 @@ public class PayByLinkTransferProvider extends Provider {
     public String generateITNHash(Object object) throws PaymentException {
         if (!(object instanceof ITNPayload)) throw new PaymentException("Invalid payload type!");
         return HashBuilder.sha256(this.secretHash + "|" + getValues(object));
+    }
+
+    @Override
+    public List<String> getAvailableIps() {
+        return null;
     }
 
     @Override

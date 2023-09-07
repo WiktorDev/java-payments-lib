@@ -29,4 +29,7 @@ public class Payment {
             throw new RuntimeException(e);
         }
     }
+    public boolean isIpAllowed(String ip) {
+        return this.provider.getAvailableIps().contains(ip);
+    }
 }

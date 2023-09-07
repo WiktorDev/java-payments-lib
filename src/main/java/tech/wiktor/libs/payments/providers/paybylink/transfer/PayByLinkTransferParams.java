@@ -1,4 +1,4 @@
-package tech.wiktor.libs.payments.providers.paybylinkTransfer;
+package tech.wiktor.libs.payments.providers.paybylink.transfer;
 
 import tech.wiktor.libs.payments.providers.Params;
 

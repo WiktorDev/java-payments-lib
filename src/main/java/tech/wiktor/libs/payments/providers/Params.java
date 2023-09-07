@@ -5,8 +5,11 @@ import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import tech.wiktor.libs.payments.utils.StringUtils;
 
+import static tech.wiktor.libs.payments.utils.StringUtils.toQueryParams;
+
 public abstract class Params {
     public String getJsonString() {
+        System.out.println(toQueryParams(this));
         return new Gson().toJson(this);
     }
     public String getValues() {
@@ -14,5 +17,8 @@ public abstract class Params {
     }
     public RequestBody requestBody() {
         return RequestBody.create(this.getJsonString(), MediaType.parse("application/json"));
+    }
+    public RequestBody requestUrlencoded() {
+        return RequestBody.create(toQueryParams(this), MediaType.parse("application/x-www-form-urlencoded"));
     }
 }
