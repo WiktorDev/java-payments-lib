@@ -1,6 +1,8 @@
 package tech.wiktor.libs.payments.example;
 
 import tech.wiktor.libs.payments.Payment;
+import tech.wiktor.libs.payments.providers.microsms.MicroSMSTransferParams;
+import tech.wiktor.libs.payments.providers.microsms.MicroSMSTransferProvider;
 import tech.wiktor.libs.payments.providers.paybylink.directbilling.PayByLinkDirectBillingParams;
 import tech.wiktor.libs.payments.providers.paybylink.directbilling.PayByLinkDirectBillingProvider;
 import tech.wiktor.libs.payments.providers.paybylink.paysafecard.PayByLinkPaySafeCardParams;
@@ -10,21 +12,27 @@ import tech.wiktor.libs.payments.providers.paybylink.transfer.PayByLinkTransferP
 
 public class Example {
     public static void main(String[] args) {
-        Payment payment = new Payment(new PayByLinkTransferProvider("Ln2Km4Cd0Oc2Am8Rp8Eb2Lc3Ib0Js0O@", 1614));
+        Payment payment = new Payment(new MicroSMSTransferProvider(1, "reqw"));
+        payment.generate(MicroSMSTransferParams.create(params -> {
 
-        payment.generate(PayByLinkTransferParams.create(params -> {
-            params.price = 10.99;
-            params.control = "e";
-            params.email = "w@w.pl";
-        }), (response, error) -> {
-            if (error != null) {
-                System.out.println(error.getMessage());
-                return;
-            }
-            System.out.println(response.url());
+        }), (generatedPaymentEntity, e) -> {
+            System.out.println(generatedPaymentEntity.url());
         });
-
-        payment.getTransaction("e");
+//        Payment payment = new Payment(new PayByLinkTransferProvider("Ln2Km4Cd0Oc2Am8Rp8Eb2Lc3Ib0Js0O@", 1614));
+//
+//        payment.generate(PayByLinkTransferParams.create(params -> {
+//            params.price = 10.99;
+//            params.control = "e";
+//            params.email = "w@w.pl";
+//        }), (response, error) -> {
+//            if (error != null) {
+//                System.out.println(error.getMessage());
+//                return;
+//            }
+//            System.out.println(response.url());
+//        });
+//
+//        payment.getTransaction("e");
 //
 //        System.out.println(payment.generateITN(null));
 

@@ -15,7 +15,6 @@ public class Payment {
     }
 
     public void generate(Params params, BiConsumer<GeneratedPaymentEntity, PaymentException> payment) {
-        System.out.println(params.getClass());
         this.provider.setParams(params);
         try {
             payment.accept(this.provider.createTransaction(), null);

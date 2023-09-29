@@ -19,6 +19,9 @@ public abstract class Params {
         return RequestBody.create(this.getJsonString(), MediaType.parse("application/json"));
     }
     public RequestBody requestUrlencoded() {
-        return RequestBody.create(toQueryParams(this), MediaType.parse("application/x-www-form-urlencoded"));
+        return RequestBody.create(this.queryParams(), MediaType.parse("application/x-www-form-urlencoded"));
+    }
+    public String queryParams() {
+        return toQueryParams(this);
     }
 }
