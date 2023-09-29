@@ -1,12 +1,12 @@
 package tech.wiktor.libs.payments;
 
-import tech.wiktor.libs.payments.entities.ErrorEntity;
 import tech.wiktor.libs.payments.entities.GeneratedPaymentEntity;
 import tech.wiktor.libs.payments.exceptions.PaymentException;
 import tech.wiktor.libs.payments.providers.Params;
 import tech.wiktor.libs.payments.providers.Provider;
+import tech.wiktor.libs.payments.providers.Status;
 
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 
 public class Payment {
     private final Provider provider;
@@ -14,12 +14,13 @@ public class Payment {
         this.provider = provider;
     }
 
-    public void generate(Params params, Consumer<GeneratedPaymentEntity> payment) {
+    public void generate(Params params, BiConsumer<GeneratedPaymentEntity, PaymentException> payment) {
+        System.out.println(params.getClass());
         this.provider.setParams(params);
         try {
-            payment.accept(this.provider.createTransaction());
+            payment.accept(this.provider.createTransaction(), null);
         } catch (PaymentException e) {
-            payment.accept(new GeneratedPaymentEntity(null, null, new ErrorEntity(e.getMessage())));
+            payment.accept(null, e);
         }
     }
     public String generateITN(Object object) {
@@ -31,5 +32,8 @@ public class Payment {
     }
     public boolean isIpAllowed(String ip) {
         return this.provider.getAvailableIps().contains(ip);
+    }
+    public Status getTransaction(String id) {
+        return this.provider.transactionInfo(id);
     }
 }

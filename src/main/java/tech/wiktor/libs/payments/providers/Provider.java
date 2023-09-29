@@ -17,6 +17,7 @@ public abstract class Provider {
     public abstract GeneratedPaymentEntity createTransaction() throws PaymentException;
     public abstract String generateITNHash(Object object) throws PaymentException;
     public abstract List<String> getAvailableIps();
+    public abstract Status transactionInfo(String id);
     public abstract void setParams(Params params);
 
     @SuppressWarnings("unchecked")

@@ -1,10 +1,13 @@
 package tech.wiktor.libs.payments.providers.paybylink.transfer;
 
+import kotlin.NotImplementedError;
 import okhttp3.Response;
 import tech.wiktor.libs.payments.entities.GeneratedPaymentEntity;
+import tech.wiktor.libs.payments.exceptions.NotImplementedException;
 import tech.wiktor.libs.payments.exceptions.PaymentException;
 import tech.wiktor.libs.payments.providers.Params;
 import tech.wiktor.libs.payments.providers.Provider;
+import tech.wiktor.libs.payments.providers.Status;
 import tech.wiktor.libs.payments.providers.paybylink.transfer.PayByLinkTransferParams;
 import tech.wiktor.libs.payments.utils.HashBuilder;
 
@@ -46,7 +49,12 @@ public class PayByLinkTransferProvider extends Provider {
 
     @Override
     public List<String> getAvailableIps() {
-        return null;
+        throw new NotImplementedException("PayByLinkTransferProvider#getAvailableIps");
+    }
+
+    @Override
+    public Status transactionInfo(String id) {
+        throw new NotImplementedException("PayByLinkTransferProvider#transactionInfo");
     }
 
     @Override

@@ -2,9 +2,11 @@ package tech.wiktor.libs.payments.providers.paybylink.paysafecard;
 
 import tech.wiktor.libs.payments.entities.GeneratedPaymentEntity;
 import tech.wiktor.libs.payments.entities.HttpResponseEntity;
+import tech.wiktor.libs.payments.exceptions.NotImplementedException;
 import tech.wiktor.libs.payments.exceptions.PaymentException;
 import tech.wiktor.libs.payments.providers.Params;
 import tech.wiktor.libs.payments.providers.Provider;
+import tech.wiktor.libs.payments.providers.Status;
 import tech.wiktor.libs.payments.utils.HashBuilder;
 
 import java.util.Arrays;
@@ -40,7 +42,7 @@ public class PayByLinkPaySafeCardProvider extends Provider {
 
     @Override
     public String generateITNHash(Object object) throws PaymentException {
-        return null;
+        throw new NotImplementedException("PayByLinkPaySafeCardProvider#generateITNHash");
     }
 
     @Override
@@ -49,6 +51,11 @@ public class PayByLinkPaySafeCardProvider extends Provider {
         if (httpResponse == null) return null;
         String body = (String) httpResponse.object();
         return Arrays.stream(body.split(",")).toList();
+    }
+
+    @Override
+    public Status transactionInfo(String id) {
+        throw new NotImplementedException("PayByLinkPaySafeCardProvider#transactionInfo");
     }
 
     @Override

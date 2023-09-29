@@ -24,7 +24,7 @@ public class PayByLinkTransferParams extends Params {
     public static PayByLinkTransferParams create(Consumer<PayByLinkTransferParams> params) {
         PayByLinkTransferParams payByLinkTransferParams = new PayByLinkTransferParams(1);
         params.accept(payByLinkTransferParams);
-        return payByLinkTransferParams ;
+        return payByLinkTransferParams;
     }
 
     public PayByLinkTransferParams(int shopId) {
